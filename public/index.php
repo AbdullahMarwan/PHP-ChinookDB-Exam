@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 
 
 require_once __DIR__ . '/../Config/database.php';
-require_once __DIR__ . '/../App/Models/Artist.php';
 
 // Get the HTTP method and path
 $method = $_SERVER['REQUEST_METHOD'];
@@ -18,25 +17,16 @@ if (strpos($uri, $basePath) === 0) {
 }
 $uri = trim($uri, '/');
 
-// Simple routing example
 header('Content-Type: application/json');
 
-if ($uri === 'artists' && $method === 'GET') {
-    $artistModel = new Artist();
-    $search = $_GET['s'] ?? null;
-    $artists = $artistModel->getAll($search);
-    echo json_encode($artists);
-} elseif (preg_match('#^artists/(\d+)$#', $uri, $matches)) {
-    $artistModel = new Artist();
-    $artist = $artistModel->getById($matches[1]);
-    if ($artist) {
-        echo json_encode($artist);
-    } else {
-        http_response_code(404);
-        echo json_encode(['error' => 'Artist not found']);
-    }
-    exit;
-} else {
-    http_response_code(404);
-    echo json_encode(['error' => 'Endpoint not found']);
-}
+// Include all route files
+require_once __DIR__ . '/../App/Routes/ArtistRoutes.php';
+require_once __DIR__ . '/../App/Routes/AlbumRoutes.php';
+require_once __DIR__ . '/../App/Routes/TrackRoutes.php';
+require_once __DIR__ . '/../App/Routes/PlaylistRoutes.php';
+require_once __DIR__ . '/../App/Routes/GenreRoutes.php';
+require_once __DIR__ . '/../App/Routes/MediaTypeRoutes.php';
+
+// If no route matched, return 404
+http_response_code(404);
+echo json_encode(['error' => 'Endpoint not found']);

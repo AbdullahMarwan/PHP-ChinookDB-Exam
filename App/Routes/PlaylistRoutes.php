@@ -1,0 +1,41 @@
+<?php
+require_once __DIR__ . '/../Controllers/PlaylistController.php';
+$controller = new PlaylistController();
+
+// GET /playlists and /playlists?s=
+if ($uri === 'playlists' && $method === 'GET') {
+    echo json_encode($controller->index($_GET));
+    exit;
+}
+
+// GET /playlists/<playlist_id>
+if (preg_match('#^playlists/(\d+)$#', $uri, $matches) && $method === 'GET') {
+    echo json_encode($controller->show($matches[1]));
+    exit;
+}
+
+// POST /playlists
+if ($uri === 'playlists' && $method === 'POST') {
+    $data = $_POST;
+    echo json_encode($controller->create($data));
+    exit;
+}
+
+// POST /playlists/<playlist_id>/tracks
+if (preg_match('#^playlists/(\d+)/tracks$#', $uri, $matches) && $method === 'POST') {
+    $trackId = $_POST['track_id'] ?? null;
+    echo json_encode($controller->addTrack($matches[1], $trackId));
+    exit;
+}
+
+// DELETE /playlists/<playlist_id>/tracks/<track_id>
+if (preg_match('#^playlists/(\d+)/tracks/(\d+)$#', $uri, $matches) && $method === 'DELETE') {
+    echo json_encode($controller->removeTrack($matches[1], $matches[2]));
+    exit;
+}
+
+// DELETE /playlists/<playlist_id>
+if (preg_match('#^playlists/(\d+)$#', $uri, $matches) && $method === 'DELETE') {
+    echo json_encode($controller->delete($matches[1]));
+    exit;
+}

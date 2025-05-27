@@ -1,0 +1,658 @@
+{
+  "info": {
+    "name": "Chinook API",
+    "_postman_id": "chinook-api-collection",
+    "description": "Test collection for Chinook REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8888/PHP-ChinookDB-Exam/public"
+    }
+  ],
+  "item": [
+    {
+      "name": "Artists",
+      "item": [
+        {
+          "name": "Get all artists",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/artists"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search artists",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/artists?s=a"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get artist by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/artists/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 404\", function () {",
+                  "    pm.expect([200,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get albums by artist",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/artists/1/albums"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create artist",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/artists",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "name", "value": "New Artist", "type": "text" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201 or 400\", function () {",
+                  "    pm.expect([200,201,400]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete artist",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/artists/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200, 400, or 404\", function () {",
+                  "    pm.expect([200,400,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Albums",
+      "item": [
+        {
+          "name": "Get all albums",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/albums"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search albums",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/albums?s=great"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get album by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/albums/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 404\", function () {",
+                  "    pm.expect([200,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get tracks in album",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/albums/1/tracks"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create album",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/albums",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "title", "value": "New Album", "type": "text" },
+                { "key": "artist_id", "value": "1", "type": "text" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201 or 400\", function () {",
+                  "    pm.expect([200,201,400]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update album",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/albums/1",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "_method", "value": "PUT", "type": "text" },
+                { "key": "title", "value": "Updated Album", "type": "text" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 404\", function () {",
+                  "    pm.expect([200,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete album",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/albums/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200, 400, or 404\", function () {",
+                  "    pm.expect([200,400,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tracks",
+      "item": [
+        {
+          "name": "Search tracks",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tracks?s=love"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get track by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tracks/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 404\", function () {",
+                  "    pm.expect([200,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get tracks by composer",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tracks?composer=AC/DC"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create track",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tracks",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "name", "value": "New Track", "type": "text" },
+                { "key": "album_id", "value": "1", "type": "text" },
+                { "key": "media_type_id", "value": "1", "type": "text" },
+                { "key": "genre_id", "value": "1", "type": "text" },
+                { "key": "composer", "value": "Composer Name", "type": "text" },
+                { "key": "milliseconds", "value": "300000", "type": "text" },
+                { "key": "bytes", "value": "1234567", "type": "text" },
+                { "key": "unit_price", "value": "0.99", "type": "text" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201 or 400\", function () {",
+                  "    pm.expect([200,201,400]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update track",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tracks/1",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "_method", "value": "PUT", "type": "text" },
+                { "key": "name", "value": "Updated Track", "type": "text" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 404\", function () {",
+                  "    pm.expect([200,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete track",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/tracks/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200, 400, or 404\", function () {",
+                  "    pm.expect([200,400,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Genres",
+      "item": [
+        {
+          "name": "Get all genres",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/genres"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Media Types",
+      "item": [
+        {
+          "name": "Get all media types",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/media_types"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Playlists",
+      "item": [
+        {
+          "name": "Get all playlists",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/playlists"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search playlists",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/playlists?s=rock"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get playlist by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/playlists/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 404\", function () {",
+                  "    pm.expect([200,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create playlist",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/playlists",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "name", "value": "New Playlist", "type": "text" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 201 or 400\", function () {",
+                  "    pm.expect([200,201,400]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Add track to playlist",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/playlists/1/tracks",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "track_id", "value": "1", "type": "text" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 400\", function () {",
+                  "    pm.expect([200,400]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Remove track from playlist",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/playlists/1/tracks/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 400\", function () {",
+                  "    pm.expect([200,400]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete playlist",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/playlists/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200, 400, or 404\", function () {",
+                  "    pm.expect([200,400,404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
