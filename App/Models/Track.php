@@ -8,6 +8,7 @@ class Track {
         $this->pdo = Database::getInstance()->getConnection();
     }
 
+    // GET /tracks, /tracks?s=, /tracks?composer=
     public function getAll($search = null, $composer = null) {
         $sql = "SELECT Track.*, MediaType.Name AS MediaType, Genre.Name AS Genre FROM Track
                 JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId
@@ -30,6 +31,7 @@ class Track {
         return $stmt->fetchAll();
     }
 
+    // GET /tracks/<track_id>
     public function getById($id) {
         $stmt = $this->pdo->prepare(
             "SELECT Track.*, MediaType.Name AS MediaType, Genre.Name AS Genre FROM Track
@@ -41,6 +43,7 @@ class Track {
         return $stmt->fetch();
     }
 
+    // POST /tracks
     public function create($data) {
         $stmt = $this->pdo->prepare(
             "INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
@@ -53,6 +56,7 @@ class Track {
         return $this->getById($this->pdo->lastInsertId());
     }
 
+    // PUT /tracks/<track_id>
     public function update($id, $data) {
         $fields = [];
         $params = [];
@@ -70,6 +74,7 @@ class Track {
         return $this->getById($id);
     }
 
+    // DELETE /tracks/<track_id>
     public function delete($id) {
         // Only delete if not in any playlist
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM PlaylistTrack WHERE TrackId = ?");
