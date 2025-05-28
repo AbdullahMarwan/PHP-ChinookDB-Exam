@@ -1,0 +1,29 @@
+[2025-05-28 16:40:41] GET  | Params: [] | Status: 404
+[2025-05-28 16:40:51] GET artists | Params: {"artists":""} | Status: 200
+[2025-05-28 16:40:51] GET artists | Params: {"artists":"","s":"a"} | Status: 200
+[2025-05-28 16:40:51] GET artists/1 | Params: {"artists\/1":""} | Status: 200
+[2025-05-28 16:40:51] GET artists/1/albums | Params: {"artists\/1\/albums":""} | Status: 200
+[2025-05-28 16:40:51] POST artists | Params: {"artists":"","name":"New Artist"} | Status: 200
+[2025-05-28 16:40:51] DELETE artists/1 | Params: {"artists\/1":""} | Status: 400
+[2025-05-28 16:40:51] GET albums | Params: {"albums":""} | Status: 200
+[2025-05-28 16:40:51] GET albums | Params: {"albums":"","s":"great"} | Status: 200
+[2025-05-28 16:40:51] GET albums/1 | Params: {"albums\/1":""} | Status: 200
+[2025-05-28 16:40:51] GET albums/1/tracks | Params: {"albums\/1\/tracks":""} | Status: 200
+[2025-05-28 16:40:51] POST albums | Params: {"albums":"","title":"New Album","artist_id":"1"} | Status: 200
+[2025-05-28 16:40:51] POST albums/1 | Params: {"albums\/1":"","_method":"PUT","title":"Updated Album"} | Status: 200
+[2025-05-28 16:40:51] DELETE albums/1 | Params: {"albums\/1":""} | Status: 400
+[2025-05-28 16:40:51] GET tracks | Params: {"tracks":"","s":"love"} | Status: 200
+[2025-05-28 16:40:51] GET tracks/1 | Params: {"tracks\/1":""} | Status: 200
+[2025-05-28 16:40:51] GET tracks | Params: {"tracks":"","composer":"AC\/DC"} | Status: 200
+[2025-05-28 16:40:51] POST tracks | Params: {"tracks":"","name":"New Track","album_id":"1","media_type_id":"1","genre_id":"1","composer":"Composer Name","milliseconds":"300000","bytes":"1234567","unit_price":"0.99"} | Status: 200
+[2025-05-28 16:40:51] POST tracks/1 | Params: {"tracks\/1":"","_method":"PUT","name":"Updated Track"} | Status: 200
+[2025-05-28 16:40:51] DELETE tracks/1 | Params: {"tracks\/1":""} | Status: 400
+[2025-05-28 16:40:51] GET genres | Params: {"genres":""} | Status: 200
+[2025-05-28 16:40:51] GET media_types | Params: {"media_types":""} | Status: 200
+[2025-05-28 16:40:51] GET playlists | Params: {"playlists":""} | Status: 200
+[2025-05-28 16:40:51] GET playlists | Params: {"playlists":"","s":"rock"} | Status: 200
+[2025-05-28 16:40:51] GET playlists/1 | Params: {"playlists\/1":""} | Status: 200
+[2025-05-28 16:40:51] POST playlists | Params: {"playlists":"","name":"New Playlist"} | Status: 200
+[2025-05-28 16:40:51] POST playlists/1/tracks | Params: {"playlists\/1\/tracks":"","track_id":"1"} | Status: 200
+[2025-05-28 16:40:51] DELETE playlists/1/tracks/1 | Params: {"playlists\/1\/tracks\/1":""} | Status: 200
+[2025-05-28 16:40:51] DELETE playlists/1 | Params: {"playlists\/1":""} | Status: 400
