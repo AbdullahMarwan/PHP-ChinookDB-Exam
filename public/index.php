@@ -12,7 +12,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Remove base path if needed
-$basePath = '/PHP-ChinookDB-Exam/public';
+$basePath = $_ENV['BASE_PATH'] ?? '';
 if (strpos($uri, $basePath) === 0) {
     $uri = substr($uri, strlen($basePath));
 }
