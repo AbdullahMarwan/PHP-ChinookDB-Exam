@@ -11,11 +11,11 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        $host = $_ENV['DB_HOST'];
-        $db   = $_ENV['DB_NAME'];
-        $user = $_ENV['DB_USER'];
-        $pass = $_ENV['DB_PASS'];
-        $charset = $_ENV['DB_CHARSET'];
+        $host = getenv('DB_HOST');
+        $db   = getenv('DB_NAME');
+        $user = getenv('DB_USER');
+        $pass = getenv('DB_PASS');
+        $charset = getenv('DB_CHARSET');
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
         $options = [
