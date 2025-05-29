@@ -1,26 +1,21 @@
-# Use the official PHP image with Apache
+# Use an official PHP image
 FROM php:8.2-apache
-
-# Install system dependencies and PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy project files to the container
-COPY . /var/www/html/
-
-# Set working directory
+# Set the working directory
 WORKDIR /var/www/html
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy all files
+COPY . /var/www/html/
 
-# Install PHP dependencies
-RUN composer install --no-dev
+# Set the document root to /var/www/html/public
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Set permissions for logs directory
+# Permissions for logs
 RUN chmod -R 777 /var/www/html/logs
 
-# Expose port 80
-EXPOSE 80
+# Install composer dependencies
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN composer install --no-dev
