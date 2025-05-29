@@ -27,3 +27,5 @@
 [2025-05-28 16:40:51] POST playlists/1/tracks | Params: {"playlists\/1\/tracks":"","track_id":"1"} | Status: 200
 [2025-05-28 16:40:51] DELETE playlists/1/tracks/1 | Params: {"playlists\/1\/tracks\/1":""} | Status: 200
 [2025-05-28 16:40:51] DELETE playlists/1 | Params: {"playlists\/1":""} | Status: 400
+[2025-05-29 14:50:57] GET  | Params: [] | Status: 404
+[2025-05-29 14:51:05] GET artists | Params: {"artists":""} | Status: 200
