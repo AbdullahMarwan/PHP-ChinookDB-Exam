@@ -10,13 +10,22 @@ class Database {
     private static $instance = null;
     private $pdo;
 
+    private function getEnvVar($key, $default = null) {
+        // Prefer getenv() for webapp/server, fallback to $_ENV for local/CLI
+        $value = getenv($key);
+        if ($value === false && isset($_ENV[$key])) {
+            $value = $_ENV[$key];
+        }
+        return $value !== false && $value !== null ? $value : $default;
+    }
+
     private function __construct() {
-        $host = $_ENV['DB_HOST'] ?? 'localhost';
-        $port = $_ENV['DB_PORT'] ?? 3306;
-        $db   = $_ENV['DB_NAME'] ?? '';
-        $user = $_ENV['DB_USER'] ?? '';
-        $pass = $_ENV['DB_PASS'] ?? '';
-        $charset = $_ENV['DB_CHARSET'] ?? 'utf8mb4';
+        $host = $this->getEnvVar('DB_HOST', 'localhost');
+        $port = $this->getEnvVar('DB_PORT', 3306);
+        $db   = $this->getEnvVar('DB_NAME', '');
+        $user = $this->getEnvVar('DB_USER', '');
+        $pass = $this->getEnvVar('DB_PASS', '');
+        $charset = $this->getEnvVar('DB_CHARSET', 'utf8mb4');
 
         $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
         $options = [
