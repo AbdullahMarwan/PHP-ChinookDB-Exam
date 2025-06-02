@@ -10,49 +10,79 @@ class TrackController {
     }
 
     public function index($params) {
-        $search = $params['s'] ?? null;
-        $composer = $params['composer'] ?? null;
-        return $this->model->getAll($search, $composer);
+        try {
+            $search = $params['s'] ?? null;
+            $composer = $params['composer'] ?? null;
+            return $this->model->getAll($search, $composer);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            return ['error' => 'Internal server error'];
+        }
     }
 
     public function show($id) {
-        $track = $this->model->getById($id);
-        if (!$track) {
-            http_response_code(404);
-            return ['error' => 'Track not found'];
+        try {
+            $track = $this->model->getById($id);
+            if (!$track) {
+                http_response_code(404);
+                return ['error' => 'Track not found'];
+            }
+            return $track;
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            return ['error' => 'Internal server error'];
         }
-        return $track;
     }
 
     public function create($data) {
-        $required = ['name', 'album_id', 'media_type_id', 'genre_id', 'composer', 'milliseconds', 'bytes', 'unit_price'];
-        foreach ($required as $field) {
-            if (!isset($data[$field])) {
-                http_response_code(400);
-                return ['error' => "$field is required"];
+        try {
+            $required = ['name', 'album_id', 'media_type_id', 'genre_id', 'composer', 'milliseconds', 'bytes', 'unit_price'];
+            foreach ($required as $field) {
+                if (!isset($data[$field])) {
+                    http_response_code(400);
+                    return ['error' => "$field is required"];
+                }
             }
+            return $this->model->create($data);
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            return ['error' => 'Internal server error'];
         }
-        return $this->model->create($data);
     }
 
     public function update($id, $data) {
-        if (empty($data)) {
-            http_response_code(400);
-            return ['error' => 'No data to update'];
+        try {
+            if (empty($data)) {
+                http_response_code(400);
+                return ['error' => 'No data to update'];
+            }
+            $updated = $this->model->update($id, $data);
+            if (!$updated) {
+                http_response_code(404);
+                return ['error' => 'Track not found or nothing to update'];
+            }
+            return $updated;
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            return ['error' => 'Internal server error'];
         }
-        $updated = $this->model->update($id, $data);
-        if (!$updated) {
-            http_response_code(404);
-            return ['error' => 'Track not found or nothing to update'];
-        }
-        return $updated;
     }
 
     public function delete($id) {
-        if (!$this->model->delete($id)) {
-            http_response_code(400);
-            return ['error' => 'Cannot delete track (may belong to a playlist or not found)'];
+        try {
+            if (!$this->model->delete($id)) {
+                http_response_code(400);
+                return ['error' => 'Cannot delete track (may belong to a playlist or not found)'];
+            }
+            return ['success' => true];
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            return ['error' => 'Internal server error'];
         }
-        return ['success' => true];
     }
 }

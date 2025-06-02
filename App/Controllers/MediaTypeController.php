@@ -10,6 +10,12 @@ class MediaTypeController {
     }
 
     public function index() {
-        return $this->model->getAll();
+        try {
+            return $this->model->getAll();
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            http_response_code(500);
+            return ['error' => 'Internal server error'];
+        }
     }
 }

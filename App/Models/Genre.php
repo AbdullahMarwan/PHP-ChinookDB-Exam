@@ -9,7 +9,12 @@ class Genre {
     }
 
     public function getAll() {
-        $stmt = $this->pdo->query("SELECT * FROM Genre");
-        return $stmt->fetchAll();
+        try {
+            $stmt = $this->pdo->query("SELECT * FROM Genre");
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return ['error' => 'Database error'];
+        }
     }
 }

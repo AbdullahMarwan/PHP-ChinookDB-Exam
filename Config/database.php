@@ -37,7 +37,13 @@ class Database {
             PDO::ATTR_EMULATE_PREPARES   => false,
         ];
 
-        $this->pdo = new PDO($dsn, $user, $pass, $options);
+        try {
+            $this->pdo = new PDO($dsn, $user, $pass, $options);
+        } catch (PDOException $e) {
+            error_log('Database connection failed: ' . $e->getMessage());
+            http_response_code(500);
+            die(json_encode(['error' => 'Database connection failed']));
+        }
     }
 
     public static function getInstance() {

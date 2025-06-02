@@ -9,7 +9,12 @@ class MediaType {
     }
 
     public function getAll() {
-        $stmt = $this->pdo->query("SELECT * FROM MediaType");
-        return $stmt->fetchAll();
+        try {
+            $stmt = $this->pdo->query("SELECT * FROM MediaType");
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return ['error' => 'Database error'];
+        }
     }
 }

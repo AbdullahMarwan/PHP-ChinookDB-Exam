@@ -32,3 +32,5 @@
 [2025-05-29 14:51:56] GET  | Params: [] | Status: 404
 [2025-05-31 15:23:56] GET artists/1 | Params: {"artists\/1":""} | Status: 200
 [2025-05-31 15:24:24] GET artists/1 | Params: {"artists\/1":""} | Status: 200
+[2025-06-02 13:12:22] GET artists/1 | Params: {"artists\/1":""} | Status: 200
+[2025-06-02 13:12:25] GET artists/1 | Params: {"artists\/1":""} | Status: 200
